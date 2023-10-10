@@ -1,3 +1,17 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $institucion = $_POST["institucion"];
+    $cue = $_POST["cue"];
+    $telefono = $_POST["telefono"];
+    $localidad = $_POST["localidad"];
+    $direccion = $_POST["direccion"];
+
+    if (empty($institucion) || empty($cue) || empty($telefono) || empty($localidad) || empty($direccion)) {
+        echo '<script>alert("Por favor, complete todos los campos.");</script>';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,16 +30,16 @@
     <div class="container">
         <div class="card bg-light">
             <article class="card-body mx-auto" style="max-width: 400px;">
-                <h4 class="card-title mt-3 text-center"></h4>
+                <h4 class="card-title mt-3 text-center">Crea tu usuario</h4>
                 <p class="division">
                 <p class="bg-light"></p>
                 </p><br>
-                <form onsubmit="return validarFormulario();">
+                <form method="post" action="">
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-building"></i> </span>
                         </div>
-                        <select class="form-control" id="institucion" required>
+                        <select class="form-control" name="institucion" required>
                             <option selected="" disabled>Institución</option>
                             <option>I-1</option>
                             <option>I-2</option>
@@ -36,35 +50,31 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="CUE" type="text" id="numero"
-                            oninput="validarSoloNumeros(this)" required>
+                        <input name="cue" class="form-control" placeholder="CUE" type="text" id="cue" oninput="validarSoloNumeros(this)" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Telefono" type="text" id="numero"
-                            oninput="validarSoloNumeros(this)" required>
+                        <input name="telefono" class="form-control" placeholder="Teléfono" type="text" id="telefono" oninput="validarSoloNumeros(this)" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-building"></i> </span>
                         </div>
-                        <select class="form-control" id="localidad" required>
+                        <select class="form-control" name="localidad" required>
                             <option selected="" disabled>Localidad</option>
                             <option>L-1</option>
                             <option>L-2</option>
                             <option>L-3</option>
                         </select>
                     </div>
-                   
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Dirección" type="text" id="direccion" required>
+                        <input name="direccion" class="form-control" placeholder="Dirección" type="text" id="direccion" required>
                     </div>
-                 
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">Completar</button>
                     </div>
@@ -81,22 +91,6 @@
             var card = document.querySelector(".card");
             card.classList.add("show");
         });
-
-        function validarFormulario() {
-            var nombre = document.getElementById("nombre").value;
-            var dni = document.getElementById("dni").value;
-            var especialidad = document.getElementById("especialidad").value;
-            var institucion = document.getElementById("institucion").value;
-
-            if (nombre === "" || dni === "" || especialidad === "Especialidad" || institucion === "Institución") {
-                alert("Por favor, complete todos los campos, incluyendo la especialidad.");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
-
     </script>
 </body>
 

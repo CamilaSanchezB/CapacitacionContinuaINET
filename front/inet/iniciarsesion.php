@@ -1,9 +1,26 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST["email"];
+    $contrasena = $_POST["contrasena"];
+
+    if (empty($email) || empty($contrasena)) {
+        echo "Por favor, complete todos los campos.";
+    } else {
+        // Aquí puedes realizar cualquier lógica adicional, como verificar las credenciales en una base de datos.
+        // Si la validación es exitosa, puedes redirigir al usuario a otra página.
+        // Por ejemplo:
+        // header("Location: otra_pagina.php");
+        // exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear cuenta</title>
+    <title>Iniciar sesión</title>
     <link rel="stylesheet" href="/inet/elementos/estilos.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -18,18 +35,18 @@
                 <p class="division">
                 <p class="bg-light"></p>
                 </p><br>
-                <form onsubmit="return validarFormulario();">
+                <form method="POST" action="">
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Correo electronico" type="text" id="email" required>
+                        <input name="email" class="form-control" placeholder="Correo electronico" type="text" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Contraseña" type="password" id="contrasena" required>
+                        <input name="contrasena" class="form-control" placeholder="Contraseña" type="password" required>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
@@ -40,18 +57,5 @@
             </article>
         </div>
     </div>
-    <script>
-        function validarFormulario() {
-            var email = document.getElementById("email").value;
-            var contrasena = document.getElementById("contrasena").value;
-
-            if (email === "" || contrasena === "") {
-                alert("Por favor, complete todos los campos.");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
 </body>
 </html>

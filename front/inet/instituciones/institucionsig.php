@@ -1,3 +1,16 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST["nombre"];
+    $apellido = $_POST["apellido"];
+    $dni = $_POST["dni"];
+    $numero = $_POST["numero"];
+
+    if (empty($nombre) || empty($apellido) || empty($dni) || empty($numero)) {
+        echo '<script>alert("Por favor, complete todos los campos.");</script>';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,37 +35,32 @@
                 </p><br>
                 <p class="card-title mt-3 text-center representante">Representante institucional</p>
                 <br>
-                <form onsubmit="return validarFormulario();">
+                <form method="post" action="">
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Nombre" type="text" id="nombre" required>
-                    </div>
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                        </div>
-                        <input name="" class="form-control" placeholder="Apellido" type="text" id="apellido" required>
+                        <input name="nombre" class="form-control" placeholder="Nombre" type="text" id="nombre" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="DNI" type="text" id="dni" oninput="validarSoloNumeros(this)" required>
+                        <input name="apellido" class="form-control" placeholder="Apellido" type="text" id="apellido" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Número celular" type="text" id="numero" oninput="validarSoloNumeros(this)" required>
+                        <input name="dni" class="form-control" placeholder="DNI" type="text" id="dni" oninput="validarSoloNumeros(this)" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Correo electrónico" type="email" id="email" required>
+                        <input name="numero" class="form-control" placeholder="Número celular" type="text" id="numero" oninput="validarSoloNumeros(this)" required>
                     </div>
+                 
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">Siguiente</button>
                     </div>
@@ -69,21 +77,6 @@
             var card = document.querySelector(".card");
             card.classList.add("show");
         });
-
-        function validarFormulario() {
-            var nombre = document.getElementById("nombre").value;
-            var apellido = document.getElementById("apellido").value;
-            var dni = document.getElementById("dni").value;
-            var numero = document.getElementById("numero").value;
-            var email = document.getElementById("email").value;
-
-            if (nombre === "" || apellido === "" || dni === "" || numero === "" || email === "" ) {
-                alert("Por favor, complete todos los campos.");
-                return false;
-            }
-
-            return true;
-        }
     </script>
 </body>
 

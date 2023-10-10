@@ -1,3 +1,17 @@
+<?php
+session_start(); // Iniciar la sesión
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Tu lógica de procesamiento aquí si es necesario.
+}
+
+if (isset($_SESSION["opcionSeleccionada"])) {
+    $opcionSeleccionada = $_SESSION["opcionSeleccionada"];
+} else {
+    $opcionSeleccionada = ""; // Valor inicial si no se ha seleccionado ninguna opción.
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,10 +34,10 @@
                 </p>
                 <h6 class="card-title mt-3 text-center">Selecciona una opción</h6>
                 <div class="form-group d-flex justify-content-between">
-                    <a href="./docente/docenteCuenta.html" class="btn btn-primary elegir-boton" data-opcion="docente">
+                    <a href="./docente/docenteCuenta.php" class="btn btn-primary elegir-boton" data-opcion="docente">
                         <img src="./img/docente.png" alt="Profesor">
                     </a>
-                    <a href="./instituciones/institucionCuenta.html" class="btn btn-primary elegir-boton" data-opcion="institucion">
+                    <a href="./instituciones/institucionCuenta.php" class="btn btn-primary elegir-boton" data-opcion="institucion">
                         <img src="./img/institucion.png" alt="Institución">
                     </a>
                 </div>
@@ -37,10 +51,12 @@
     
             opciones.forEach(function (opcion) {
                 opcion.addEventListener("click", function (event) {
-                 
                     var opcionSeleccionada = event.currentTarget.getAttribute("data-opcion");
-    
-                    localStorage.setItem("opcionSeleccionada", opcionSeleccionada);
+                    <?php echo "localStorage.setItem('opcionSeleccionada', '$opcionSeleccionada');"; ?>
+                    
+                    // Almacena la opción seleccionada en la variable de sesión de PHP
+                    <?php echo '$_SESSION["opcionSeleccionada"] = "' . $opcionSeleccionada . '";'; ?>
+
                 });
             });
         });
