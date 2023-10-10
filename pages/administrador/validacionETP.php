@@ -18,25 +18,25 @@
   ?>
   <hr class="mt-0" style="border:2ch solid rgba(125, 125, 125, 1); opacity: 1;">
   <div class="container">
-    
+
     <div class="row d-flex align-items-center">
       <div class="col-6">
         <img src="./assets/image/logo-inet.png" class="img-fluid">
       </div>
       <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-        <button type="button" class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
+        <a href='?t=administrador&p=listadoETP' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: #e0e0e0;  color: light-grey;">
           <i class="fas fa-check"></i> Instituciones
-        </button>
+        </a>
       </div>
       <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-        <button type="button" class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
+        <a href='?t=administrador&p=listadoDocente' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
           <i class="fas fa-check"></i> Docentes
-        </button>
+        </a>
       </div>
       <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-        <button type="button" class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
+        <a href='?t=administrador&p=listadoCapacitaciones' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
           <i class="fas fa-check"></i> Capacitaciones
-        </button>
+        </a>
       </div>
     </div>
     <hr style="border:2ch solid rgba(12, 104, 174, 1); opacity: 1;">
@@ -45,7 +45,7 @@
       <?php
       foreach ($listaProvincias as $provincia) { ?>
         <li style="margin-bottom: 10px; font-size: 20px;" class="text-primary">
-          <a href='?p=capacitaciones&id=<?php echo $provincia['id_provincia'] ?>' class="text-primary">
+          <a href='?t=administrador&p=detalleValidacionETP&id=<?php echo $provincia['id_provincia'] ?>' class="text-primary">
             <?php echo $provincia['nombre_provincia'] ?>
           </a>
         </li>
