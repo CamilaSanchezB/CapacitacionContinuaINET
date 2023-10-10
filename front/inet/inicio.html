@@ -20,16 +20,32 @@
                 </p>
                 <h6 class="card-title mt-3 text-center">Selecciona una opción</h6>
                 <div class="form-group d-flex justify-content-between">
-                    <a href="./docente/docenteCuenta.html" class="btn btn-primary elegir-boton">
+                    <a href="./docente/docenteCuenta.html" class="btn btn-primary elegir-boton" data-opcion="docente">
                         <img src="./img/docente.png" alt="Profesor">
                     </a>
-                    <a href="./instituciones/institucionCuenta.html" class="btn btn-primary elegir-boton">
-                        <img src="./img/institucion.png" alt="Extra">
+                    <a href="./instituciones/institucionCuenta.html" class="btn btn-primary elegir-boton" data-opcion="institucion">
+                        <img src="./img/institucion.png" alt="Institución">
                     </a>
                 </div>
                
             </article>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var opciones = document.querySelectorAll(".elegir-boton");
+    
+            opciones.forEach(function (opcion) {
+                opcion.addEventListener("click", function (event) {
+                    // Obtén la opción seleccionada del atributo data-opcion
+                    var opcionSeleccionada = event.currentTarget.getAttribute("data-opcion");
+    
+                    // Guarda la opción seleccionada en localStorage
+                    localStorage.setItem("opcionSeleccionada", opcionSeleccionada);
+                });
+            });
+        });
+    </script>
+    
 </body>
 </html>
