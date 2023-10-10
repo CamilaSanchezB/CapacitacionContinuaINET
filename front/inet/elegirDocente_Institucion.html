@@ -37,10 +37,9 @@
     
             opciones.forEach(function (opcion) {
                 opcion.addEventListener("click", function (event) {
-                    // Obtén la opción seleccionada del atributo data-opcion
+                 
                     var opcionSeleccionada = event.currentTarget.getAttribute("data-opcion");
     
-                    // Guarda la opción seleccionada en localStorage
                     localStorage.setItem("opcionSeleccionada", opcionSeleccionada);
                 });
             });
