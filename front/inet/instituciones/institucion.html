@@ -12,10 +12,11 @@
 </head>
 
 <body>
+    <img src="../../image/logo-inet.png" alt="Imagen de encabezado" style="width: 20%; margin-left: 40%; margin-top: 70px;">
     <div class="container">
         <div class="card bg-light">
             <article class="card-body mx-auto" style="max-width: 400px;">
-                <h4 class="card-title mt-3 text-center">Perfecto! Completa lo siguiente</h4>
+                <h4 class="card-title mt-3 text-center"></h4>
                 <p class="division">
                 <p class="bg-light"></p>
                 </p><br>
@@ -24,8 +25,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-building"></i> </span>
                         </div>
-                        <select class="form-control" id="institucion">
-                            <option selected="">Institucion</option>
+                        <select class="form-control" id="institucion" required>
+                            <option selected="" disabled>Institución</option>
                             <option>I-1</option>
                             <option>I-2</option>
                             <option>I-3</option>
@@ -35,35 +36,37 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Número celular" type="text" id="numero"
-                            oninput="validarSoloNumeros(this)">
+                        <input name="" class="form-control" placeholder="CUE" type="text" id="numero"
+                            oninput="validarSoloNumeros(this)" required>
+                    </div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                        </div>
+                        <input name="" class="form-control" placeholder="Telefono" type="text" id="numero"
+                            oninput="validarSoloNumeros(this)" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-building"></i> </span>
                         </div>
-                        <select class="form-control" id="localidad">
-                            <option selected="">Localidad</option>
+                        <select class="form-control" id="localidad" required>
+                            <option selected="" disabled>Localidad</option>
                             <option>L-1</option>
                             <option>L-2</option>
                             <option>L-3</option>
                         </select>
                     </div>
+                   
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="DNI" type="text" id="dni"
-                            oninput="validarSoloNumeros(this)">
+                        <input name="" class="form-control" placeholder="Dirección" type="text" id="direccion" required>
                     </div>
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                        </div>
-                        <input name="" class="form-control" placeholder="Dirección" type="text" id="direccion">
-                    </div>
+                 
                     <div class="form-group">
-                        <a href="institucionsig.html" class="btn btn-primary btn-block">Siguiente</a>
+                        <button type="submit" class="btn btn-primary btn-block">Completar</button>
                     </div>
                 </form>
             </article>
@@ -85,7 +88,7 @@
             var especialidad = document.getElementById("especialidad").value;
             var institucion = document.getElementById("institucion").value;
 
-            if (nombre === "" || dni === "" || especialidad === "Especialidad" || institucion === "Institucion") {
+            if (nombre === "" || dni === "" || especialidad === "Especialidad" || institucion === "Institución") {
                 alert("Por favor, complete todos los campos, incluyendo la especialidad.");
                 return false;
             }

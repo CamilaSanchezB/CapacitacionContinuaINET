@@ -12,10 +12,11 @@
 </head>
 
 <body>
+    <img src="../../image/logo-inet.png" alt="Imagen de encabezado" style="width: 20%; margin-left: 40%; margin-top: 70px;">
     <div class="container">
         <div class="card bg-light">
             <article class="card-body mx-auto" style="max-width: 400px;">
-                <h4 class="card-title mt-3 text-center">Perfecto! Vamos a registrarte</h4>
+                <h4 class="card-title mt-3 text-center"></h4>
                 <p class="division">
                 <p class="bg-light"></p>
                 </p><br>
@@ -24,27 +25,26 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Nombre de usuario" type="text" id="nombre">
+                        <input name="" class="form-control" placeholder="Nombre de usuario" type="text" id="nombre" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="DNI" type="text" id="dni"
-                            oninput="validarSoloNumeros(this)">
+                        <input name="" class="form-control" placeholder="DNI" type="text" id="dni" oninput="validarSoloNumeros(this)" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                         </div>
-                        <input name="" class="form-control" placeholder="Correo electronico" type="email">
+                        </div>
+                        <input name="" class="form-control" placeholder="Correo electrónico" type="email" id="email" required>
                     </div>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-building"></i> </span>
                         </div>
-                        <select class="form-control" id="especialidad">
-                            <option selected="">Especialidad</option>
+                        <select class="form-control" id="especialidad" required>
+                            <option selected="" disabled>Especialidad</option>
                             <option>E-1</option>
                             <option>E-2</option>
                             <option>E-3</option>
@@ -54,8 +54,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-building"></i> </span>
                         </div>
-                        <select class="form-control" id="institucion">
-                            <option selected="">Institucion</option>
+                        <select class="form-control" id="institucion" required>
+                            <option selected="" disabled>Institución</option>
                             <option>I-1</option>
                             <option>I-2</option>
                             <option>I-3</option>
@@ -85,15 +85,13 @@
             var especialidad = document.getElementById("especialidad").value;
             var institucion = document.getElementById("institucion").value;
 
-            if (nombre === "" || dni === "" || especialidad === "Especialidad" || institucion === "Institucion" || email === "") {
-                alert("Por favor, complete todos los campos, incluyendo la especialidad.");
+            if (nombre === "" || dni === "" || especialidad === "" || institucion === "" || email === "") {
+                alert("Por favor, complete todos los campos.");
                 return false;
             }
 
             return true;
         }
-    </script>
-
     </script>
 </body>
 
