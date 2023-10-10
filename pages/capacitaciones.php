@@ -14,13 +14,18 @@
 
     if (isset($_GET['id'])) {
         try {
-            $listaProvincias = [];
+            $listaCapacitaciones = [];
             $id = $_GET['id'];
-            $sentenciaSQL = $conexion->prepare("SELECT * FROM `provincias` WHERE `id_provincia` = '$id'");
+            $sentenciaSQL = $conexion->prepare("SELECT * FROM `capacitaciones`
+            INNER JOIN `instituciones` ON `capacitaciones`.`id_institucion` = `instituciones`.`id_institucion`
+            INNER JOIN `localidades` ON `instituciones`.`id_localidad` = `localidades`.`id_localidad`
+            INNER JOIN `provincias` ON `localidades`.`id_provincia` = `provincias`.`id_provincia`
+            INNER JOIN `tipos_educacion` ON `capacitaciones`.`id_tipo_educacion` = `tipos_educacion`.`id_tipo_educacion`
+            WHERE `capacitaciones`.`id_capacitacion` = '$id'");
             $sentenciaSQL->execute();
-            $listaProvincias = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
-            if (!empty($listaProvincias)) {
-                $primerElemento = array_shift($listaProvincias);
+            $listaCapacitaciones = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+            if (!empty($listaCapacitaciones)) {
+                $primerElemento = array_shift($listaCapacitaciones);
             }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -53,14 +58,14 @@
         <hr style="border:2ch solid rgba(12, 104, 174, 1); opacity: 1;">
         <h1 style="color: rgba(129, 129, 129, 1);">Cursos de capacitación <span class="badge bg-secondary">Abierto</span></h1>
         <hr class="col-5">
-        <div class="col-7 text-break h3" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;"><?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Institución: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Tipo de educación: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Fecha de inicio: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Días y horarios: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Modalidad: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Lugar / plataforma: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Descripción: <?php echo $primerElemento['nombre_provincia'] ?></div>
+        <div class="col-7 text-break h3" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;"><?php echo $primerElemento['nombre_capacitacion'] ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Institución: <?php echo $primerElemento['nombre_institucion'] ?>, <?php echo $primerElemento['nombre_localidad']?>, <?php echo $primerElemento['nombre_provincia']?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Tipo de educación: <?php echo $primerElemento['desc_tipo_educacion'] ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Fecha de inicio: <?php $dateTime = new DateTime($primerElemento['fecha_inicio_capacitacion']);$formattedDateTime = $dateTime->format("d/m/y H:i"); echo $formattedDateTime ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Fecha de finalización: <?php $dateTime = new DateTime($primerElemento['fecha_fin_capacitacion']);$formattedDateTime = $dateTime->format("d/m/y H:i"); echo $formattedDateTime ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Días y horarios: <?php echo $primerElemento['dias_horarios_capacitacion'] ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Modalidad: <?php echo $primerElemento['modalidad_capacitacion'] ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Lugar / plataforma: <?php echo $primerElemento['lugar_o_plataforma_capacitacion'] ?></div>
 
     </div>
     <?php $conexion = null; ?>

@@ -11,44 +11,35 @@
 <body>
   <?php include('./config/db-connection.php') ?>
   <?php
-  $listaProvincias = [];
-  $sentenciaSQL = $conexion->prepare("SELECT * FROM `provincias`");
+  $listaCapacitaciones = [];
+  $sentenciaSQL = $conexion->prepare("SELECT * FROM `capacitaciones`");
   $sentenciaSQL->execute();
-  $listaProvincias = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+  $listaCapacitaciones = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
   ?>
   <hr class="mt-0" style="border:2ch solid rgba(125, 125, 125, 1); opacity: 1;">
-  <div class="container">
-    <div class="row mt-3 d-flex align-items-center justify-content-end">
-      <div class="col-2">
-        <button type="button" class="btn btn-block" style="background-color: rgba(19, 140, 232, 1);  color: rgba(77, 74, 74, 1);width: 100%;">
-          <i class="fas fa-check"></i> Ingresar
-        </button>
-      </div>
-    </div>
+  <div class="container" style="height: 75vh;">
+    
     <div class="row d-flex align-items-center">
       <div class="col-6">
         <img src="./assets/image/logo-inet.png" class="img-fluid">
       </div>
-      <div class="col-3 d-flex justify-content-end align-items-center" style="height: 6ch;">
-        <button type="button" class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(217, 217, 217, 0.42);  color: rgba(188, 182, 182, 1);">
-          <i class="fas fa-check"></i> Buscar Ofertas
-        </button>
+      <div class="col-5"></div>
+      <div class="col-1 d-flex justify-content-end align-items-center" style="height: 6ch;">
+      <a href='?p=iniciarsesion' class="btn btn-block" style="background-color: rgba(19, 140, 232, 1);  color: white;width: 100%;">
+          <i class="fas fa-check"></i> Ingresar
+        </a>
       </div>
-      <div class="col-3 d-flex justify-content-end align-items-center" style="height: 6ch;">
-        <button type="button" class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(217, 217, 217, 0.42);  color: rgba(188, 182, 182, 1);">
-          <i class="fas fa-check"></i> Seleccionar pro..
-        </button>
-      </div>
+      
     </div>
     <hr style="border:2ch solid rgba(12, 104, 174, 1); opacity: 1;">
     <h1 style="color: rgba(129, 129, 129, 1);">Cursos de capacitación</h1>
     <h3 class="mt-4" style="color: rgba(129, 129, 129, 1);">Ofertas de cursos</h3>
     <ol>
       <?php
-      foreach ($listaProvincias as $provincia) { ?>
+      foreach ($listaCapacitaciones as $capacitacion) { ?>
         <li style="margin-bottom: 10px; font-size: 20px;" class="text-primary">
-          <a href='?p=capacitaciones&id=<?php echo $provincia['id_provincia'] ?>' class="text-primary">
-            <?php echo $provincia['nombre_provincia'] ?>
+          <a href='?p=capacitaciones&id=<?php echo $capacitacion['id_capacitacion'] ?>' class="text-primary">
+            <?php echo $capacitacion['nombre_capacitacion'] ?>
           </a>
         </li>
       <?php

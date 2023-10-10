@@ -30,43 +30,52 @@
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-    }
-    include('./functions/cerrarsesion.php');
-?>
-    <hr class="mt-0" style="border:2ch solid rgba(125, 125, 125, 1); opacity: 1;">
-    <div class="container" style="min-height: 75vh;">
-    <div class="col-2 mb-5">
-        <form method="POST">
-          <button name="eliminar" value="eliminar" type="submit" class="btn btn-block" style="background-color: #e0e0e0;  color: rgba(77, 74, 74, 1);width: 100%;">
-            <i class="fas fa-check"></i> Administrador
-            <image src="./assets/image/logout.png" class="img-fluid" width="10%" height="10%" />
-          </button>
-        </form>
+    } ?>
 
-      </div>
+    <?php 
+    if(isset($_POST['Eliminar'])){
+        $id_capacitacion = $_POST['Eliminar'];
+        try{
+            $sentenciaSQL = $conexion ->prepare("DELETE FROM  `capacitaciones` WHERE `id_capacitacion` = '$id_capacitacion'");
+        $sentenciaSQL->execute();
+        header("Location: ?t=institucion&p=capacitacion-instituciones");
+        }catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    ?>
+
+    <hr class="mt-0" style="border:2ch solid rgba(125, 125, 125, 1); opacity: 1;">
+    <div class="container">
+        <div class="row mt-3 d-flex align-items-center justify-content-end">
+            <div class="col-2">
+                <button type="button" class="btn btn-block" style="background-color: rgba(19, 140, 232, 1);  color: rgba(77, 74, 74, 1);width: 100%;">
+                    <i class="fas fa-check"></i> Institución
+                </button>
+            </div>
+        </div>
         <div class="row d-flex align-items-center">
-            <div class="col-6">
+            <div class="col-3">
                 <img src="./assets/image/logo-inet.png" class="img-fluid">
             </div>
-            <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-                <a href='?t=administrador&p=listadoETP' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: #e0e0e0;  color: light-grey;">
-                    <i class="fas fa-check"></i> Instituciones
-                </a>
-            </div>
-            <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-                <a href='?t=administrador&p=listadoDocente' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
-                    <i class="fas fa-check"></i> Docentes
-                </a>
-            </div>
-            <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-                <a href='?t=administrador&p=listadoCapacitaciones' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
+            <div class="col-3 d-flex justify-content-end align-items-center" style="height: 6ch;">
+                <button type="button" class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(217, 217, 217, 0.42);  color: rgba(188, 182, 182, 1);">
                     <i class="fas fa-check"></i> Capacitaciones
-                </a>
+                </button>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center" style="height: 6ch;">
+                <button type="button" class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(217, 217, 217, 0.42);  color: rgba(188, 182, 182, 1);">
+                    <i class="fas fa-check"></i> Crear Capacitaciones
+                </button>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center" style="height: 6ch;">
+                <button type="button" class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(217, 217, 217, 0.42);  color: rgba(188, 182, 182, 1);">
+                    <i class="fas fa-check"></i> Docentes
+                </button>
             </div>
         </div>
         <hr style="border:2ch solid rgba(12, 104, 174, 1); opacity: 1;">
-        <h1 style="color: rgba(129, 129, 129, 1);">Datos de la capacitación</h1>
-        <hr class="col-5">
+        <h1 style="color: rgba(129, 129, 129, 1);">Capacitaciones</h1>
         <div class="col-12 h5 mt-4" style="color: rgba(137, 137, 137, 1);">
             <?php echo $primerElemento['nombre_capacitacion'] ?>
             <span class="badge <?php if(haPasadoFecha($primerElemento['fecha_fin_capacitacion'])){echo 'bg-danger';}else{echo 'bg-success';} ?>"><?php if(haPasadoFecha($primerElemento['fecha_fin_capacitacion'])){echo 'FINALIZADO';}else{echo 'ACTIVO';} ?></span>
@@ -93,8 +102,17 @@
         </div>
         <div class="col-3 h5 mt-3" style="color: rgba(137, 137, 137, 1);">
             Lugar/Plataforma: <?php echo $primerElemento['lugar_o_plataforma_capacitacion']?>
-        </div>    </div>
-    <?php $conexion = null; ?>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12 d-flex justify-content-center">
+                <form method="POST">
+                    <button class="btn btn-lg btn-danger shadow mb-5" name="Eliminar" value="<?php echo $primerElemento['id_capacitacion']?>">Eliminar capacitación</button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>

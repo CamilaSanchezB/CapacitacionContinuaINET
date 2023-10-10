@@ -12,22 +12,37 @@
     <?php include('./config/db-connection.php') ?>
     <?php
 
-    if (isset($_GET['id'])) {
+   if (isset($_GET['id'])) {
         try {
-            $listaProvincias = [];
+            $listaInstituciones = [];
             $id = $_GET['id'];
-            $sentenciaSQL = $conexion->prepare("SELECT * FROM `provincias` WHERE `id_provincia` = '$id'");
+            $sentenciaSQL = $conexion->prepare("SELECT * FROM `instituciones`
+            INNER JOIN `representantes_institucionales` ON `instituciones`.`id_representante` = `representantes_institucionales`.`id_representante`
+            INNER JOIN `localidades` ON `instituciones`.`id_localidad` = `localidades`.`id_localidad`
+            INNER JOIN `provincias` ON `localidades`.`id_provincia` = `provincias`.`id_provincia`
+            INNER JOIN `usuarios` ON `instituciones`.`id_usuario` = `usuarios`.`id_usuario`
+            WHERE `id_institucion` = '$id'");
             $sentenciaSQL->execute();
-            $listaProvincias = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
-            if (!empty($listaProvincias)) {
-                $primerElemento = array_shift($listaProvincias);
+            $listaInstituciones = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+            if (!empty($listaInstituciones)) {
+                $primerElemento = array_shift($listaInstituciones);
             }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+        include('./functions/cerrarsesion.php');
     } ?>
     <hr class="mt-0" style="border:2ch solid rgba(125, 125, 125, 1); opacity: 1;">
     <div class="container" style="min-height: 75vh;">
+    <div class="col-2 mb-5">
+        <form method="POST">
+          <button name="eliminar" value="eliminar" type="submit" class="btn btn-block" style="background-color: #e0e0e0;  color: rgba(77, 74, 74, 1);width: 100%;">
+            <i class="fas fa-check"></i> Administrador
+            <image src="./assets/image/logout.png" class="img-fluid" width="10%" height="10%" />
+          </button>
+        </form>
+
+      </div>
         <div class="row d-flex align-items-center">
             <div class="col-6">
                 <img src="./assets/image/logo-inet.png" class="img-fluid">
@@ -51,13 +66,16 @@
         <hr style="border:2ch solid rgba(12, 104, 174, 1); opacity: 1;">
         <h1 style="color: rgba(129, 129, 129, 1);">Datos de la institución</h1>
         <hr class="col-5">
-        <div class="col-7 text-break h3" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;"><?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Representante: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Teléfono: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Correo electrónico: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">CUE: <?php echo $primerElemento['nombre_provincia'] ?></div>
-        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Domicilio: <?php echo $primerElemento['nombre_provincia'] ?></div>
-
+        <div class="col-12 text-break h3" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;"><?php echo $primerElemento['nombre_institucion'] ?>, <?php echo $primerElemento['nombre_localidad']?>, <?php echo $primerElemento['nombre_provincia']?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Teléfono: <?php echo $primerElemento['telefono_institucion'] ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Correo electrónico: <?php echo $primerElemento['email_usuario'] ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">CUE: <?php echo $primerElemento['cue_institucion'] ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Domicilio: <?php echo $primerElemento['nombre_institucion'] ?></div>
+        <h3 class="mt-5" style="color: rgba(129, 129, 129, 1);">Datos del representate institucional</h3>
+        <hr class="col-5">
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Nombre y apellido: <?php echo $primerElemento['nombre_representante'] ?> <?php echo $primerElemento['apellido_representante'] ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">DNI: <?php echo $primerElemento['dni_representante'] ?></div>
+        <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Teléfono: <?php echo $primerElemento['telefono_representante'] ?></div>
     </div>
     <?php $conexion = null; ?>
 </body>
