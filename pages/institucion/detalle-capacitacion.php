@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <?php 
+    <?php
     include('./functions/validacion-institucion.php');
     include('./config/db-connection.php');
     include('./functions/fechaPasada.php');
@@ -18,7 +18,7 @@
 
     if (isset($_GET['id'])) {
         include('./functions/obtenerDetalleCapacitacion.php');
-        $primerElemento=obtenerDetalleCapacitacion($_GET['id']);
+        $primerElemento = obtenerDetalleCapacitacion($_GET['id']);
     } ?>
 
     <?php
@@ -33,23 +33,25 @@
             echo "Error: " . $e->getMessage();
         }
     }
-    
+
     ?>
     <hr class="mt-0" style="border:2ch solid rgba(125, 125, 125, 1); opacity: 1;">
     <div class="container" style="min-height: 75vh;">
-    <?php require_once('./template/header-institucion.php')?>
-    <?php require_once('./template/capacitacionDetallada.php');?>
-    <div class="row mt-4">
+        <?php require_once('./template/header-institucion.php') ?>
+        <?php require_once('./template/capacitacionDetallada.php'); ?>
+        <div class="row mt-4">
             <div class="col-12 d-flex justify-content-center">
                 <form method="POST">
                     <button class="btn btn-lg btn-danger shadow mb-5" name="Eliminar"
                         value="<?php echo $primerElemento['id_capacitacion'] ?>">Eliminar capacitación</button>
+                    <a href="" onclick="alert('En desarrollo...')" class="btn btn-lg btn-warning shadow mb-5" 
+                        value="<?php echo $primerElemento['id_capacitacion'] ?>">Editar capacitación</a>
                 </form>
             </div>
 
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

@@ -15,7 +15,8 @@
     $sentenciaSQL = $conexion->prepare("SELECT DISTINCT i.id_institucion, i.nombre_institucion FROM `detalle_docente` dd
     INNER JOIN `docentes` d ON dd.`id_docente` = d.`id_docente`
     INNER JOIN `instituciones` i ON dd.`id_institucion` = i.`id_institucion`
-    INNER JOIN `especialidades` e ON dd.`id_especialidad` = e.`id_especialidad`");
+    INNER JOIN `especialidades` e ON dd.`id_especialidad` = e.`id_especialidad`
+    WHERE `estado_validacion_docente`=1");
     $sentenciaSQL->execute();
     $listaInstituciones = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
     include('./functions/cerrarsesion.php');
@@ -35,7 +36,7 @@
         INNER JOIN `docentes` d ON dd.`id_docente` = d.`id_docente`
         INNER JOIN `instituciones` i ON dd.`id_institucion` = i.`id_institucion`
         INNER JOIN `especialidades` e ON dd.`id_especialidad` = e.`id_especialidad`
-        WHERE i.id_institucion = ?");
+        WHERE i.id_institucion = ? AND estado_validacion_docente = 1");
                 $sentenciaSQL->execute([$institucion['id_institucion']]);
                 $listaEspecialidades = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
@@ -45,7 +46,7 @@
                         $sentenciaSQL = $conexion->prepare("SELECT d.nombre_docente, d.id_docente, d.dni_docente, d.apellido_docente FROM `detalle_docente` dd
                         INNER JOIN `docentes` d ON dd.`id_docente` = d.`id_docente`
                         INNER JOIN `especialidades` e ON dd.`id_especialidad` = e.`id_especialidad`
-                        WHERE e.id_especialidad = ?");
+                        WHERE e.id_especialidad = ? AND estado_validacion_docente = 1");
                         $sentenciaSQL->execute([$especialidad['id_especialidad']]);
                         $listaDocentes = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 

@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: ?t=administrador&p=listadoETP");
                     break;
                 case 2:
-                    header("Location: ?t=docente&p=listadoCapacitaciones");
+                    header("Location: ?t=docente&p=listado-capacitaciones");
                     break;
                 case 3:
                     header("Location: ?t=institucion&p=capacitacion-instituciones");
@@ -68,14 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form method="POST" >
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            <span class="input-group-text" id="basic-addon1">@ </span>
                             </div>
                             <input name="email" class="form-control" placeholder="Correo electronico" type="text" required>
                         </div>
                         <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                            </div>
                             <input name="contrasena" class="form-control" placeholder="Contraseña" type="password" required>
                         </div>
                         <div class="form-group">
@@ -84,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </form>
                 <!-- Enlace a la página de registro -->
 
-                <p class="text-center">¿No tienes una cuenta? <a href="elegirDocente_Institucion.html">Regístrate aquí</a></p>
+                <p class="text-center">¿No tienes una cuenta? <a href="#" onclick="alert('Esta sección está en desarrollo');">Regístrate aquí</a></p>
             </article>
         </div>
     </div>
