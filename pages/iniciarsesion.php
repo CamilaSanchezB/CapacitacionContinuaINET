@@ -19,8 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($row) {
             $_SESSION["usuario"] = $row;
 
-            //echo var_dump($row);
-            echo "<script>alert('Todo OK');</script>";
+            
             switch ($row['id_tipo_usuario']) {
                 case 1:
                     header("Location: ?t=administrador&p=listadoETP");
