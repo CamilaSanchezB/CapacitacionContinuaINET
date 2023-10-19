@@ -11,7 +11,6 @@
 <body>
     <?php
     include('./config/db-connection.php');
-    include('./functions/validacion-institucion.php');
 
 
     $id_usuario = $_SESSION['usuario']['id_usuario'];

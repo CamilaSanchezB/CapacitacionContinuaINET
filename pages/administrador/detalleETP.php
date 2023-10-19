@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <?php include('./config/db-connection.php') ?>
+    <?php include('./config/db-connection.php');
+    include ('./functions/fechaPasada.php'); ?>
     <?php
 
     if (isset($_GET['id'])) {
@@ -30,6 +31,16 @@
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+
+        $listaCapacitaciones = [];
+        try {
+            $sentenciaSQL = $conexion->prepare("SELECT * FROM `capacitaciones` WHERE `id_institucion` = :id_institucion");
+            $sentenciaSQL->bindParam(":id_institucion", $_GET['id']);
+            $sentenciaSQL->execute();
+            $listaCapacitaciones = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
         include('./functions/cerrarsesion.php');
     } ?>
     <?php require_once('./template/header-administrador.php') ?>
@@ -47,6 +58,41 @@
         <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Nombre y apellido: <?php echo $primerElemento['nombre_representante'] ?> <?php echo $primerElemento['apellido_representante'] ?></div>
         <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">DNI: <?php echo $primerElemento['dni_representante'] ?></div>
         <div class="col-7 text-break h4" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">Teléfono: <?php echo $primerElemento['telefono_representante'] ?></div>
+        <hr class="col-5 mt-5">
+        <h3 class="text-secondary">Capacitaciones brindadas:</h3>
+        <?php
+        if (!empty($listaCapacitaciones)) {
+        ?>
+            <ul>
+                <?php
+                foreach ($listaCapacitaciones as $capacitacion) { ?>
+                    <li style="margin-bottom: 10px; font-size: 20px;" class="text-primary">
+                        <a href="?t=administrador&p=detalleCapacitacion&id=<?php echo $capacitacion['id_capacitacion']?>">
+                        <?php echo $capacitacion['nombre_capacitacion']?>   
+                        <span class="ms-5 badge <?php if (haPasadoFecha($capacitacion['fecha_fin_capacitacion'])) {
+                                            echo 'bg-danger';
+                                        } else if (haPasadoFecha($capacitacion['fecha_inicio_capacitacion'])) {
+                                            echo 'bg-success';
+                                        } else {
+                                            echo 'bg-warning';
+                                        } ?>">
+                    <?php if (haPasadoFecha($capacitacion['fecha_fin_capacitacion'])) {
+                        echo 'FINALIZADO';
+                    } else if (haPasadoFecha($capacitacion['fecha_inicio_capacitacion'])) {
+                        echo 'ACTIVO';
+                    } else {
+                        echo 'AUN NO INICIÓ';
+                    } ?>
+                </span> 
+                    </a>
+                    </li>
+                <?php }
+                ?>
+
+            </ul>
+        <?php
+        }
+        ?>
     </div>
     </div>
     <?php $conexion = null; ?>

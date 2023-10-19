@@ -5,22 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
     <?php
     include('./config/db-connection.php');
-    include ('./functions/fechaPasada.php');
+    include('./functions/fechaPasada.php');
     ?>
     <?php
-    session_start();
     $id_usuario = $_SESSION['usuario']['id_usuario'];
 
     $listaDetalleCapacitaciones = [];
     try {
-        $sentenciaSQL = $conexion->prepare("SELECT c.id_capacitacion, dc.estado_capacitacion, c.fecha_inicio_capacitacion, c.fecha_fin_capacitacion, dc.id_detalle_capacitacion, c.nombre_capacitacion, i.nombre_institucion
+        $sentenciaSQL = $conexion->prepare("SELECT c.id_capacitacion, dc.estado_capacitacion, dc.estado_respuesta, c.fecha_inicio_capacitacion, c.fecha_fin_capacitacion, dc.id_detalle_capacitacion, c.nombre_capacitacion, i.nombre_institucion
         FROM `detalle_capacitaciones` dc
         INNER JOIN `capacitaciones` c ON dc.id_capacitacion = c.id_capacitacion
         INNER JOIN `instituciones` i ON c.id_institucion = i.id_institucion
@@ -55,26 +53,40 @@
                 }
 
                 echo '<li style="margin-bottom: 10px; font-size: 20px;" class="text-primary">';
-                echo '<a href="?t=docente&p=detalle-capacitacion&id=' . $detalleCapacitacion['id_capacitacion'] . (haPasadoFecha($detalleCapacitacion['fecha_inicio_capacitacion']) ? '&i=0' : '') . '">' . $capacitacion . '</a>';?>
-                <span class="badge ms-2 bg-<?php if(haPasadoFecha($detalleCapacitacion['fecha_inicio_capacitacion'])){echo 'danger';}?>"><?php if(haPasadoFecha($detalleCapacitacion['fecha_inicio_capacitacion'])){echo 'FINALIZADA';}?></span>
-                <?php if($detalleCapacitacion['estado_capacitacion']==1){
-                echo '<a class="btn badge btn-success" onclick="alert(`En desarrollo...`)">Completar formulario de impacto pedagógico</a>';
-                
+                echo '<a href="?t=docente&p=detalle-capacitacion&id=' . $detalleCapacitacion['id_capacitacion'] . (haPasadoFecha($detalleCapacitacion['fecha_inicio_capacitacion']) ? '&i=0' : '') . '">' . $capacitacion . '</a>'; ?>
+                <span class="badge ms-2 bg-<?php if (haPasadoFecha($detalleCapacitacion['fecha_fin_capacitacion'])) {
+                        echo 'danger';
+                    } else if (haPasadoFecha($detalleCapacitacion['fecha_inicio_capacitacion'])) {
+                        echo 'success';
+                    } else {
+                        echo 'warning';
+                    } ?>">
+                    <?php if (haPasadoFecha($detalleCapacitacion['fecha_fin_capacitacion'])) {
+                        echo 'FINALIZADO';
+                    } else if (haPasadoFecha($detalleCapacitacion['fecha_inicio_capacitacion'])) {
+                        echo 'ACTIVO';
+                    } else {
+                        echo 'AUN NO INICIÓ';
+                    } ?>
 
+
+                </span>
+                <?php if ($detalleCapacitacion['estado_capacitacion'] == 1 && $detalleCapacitacion['estado_respuesta'] == 0) {
+                    echo '<a href="?t=docente&p=formulario-capacitacion&id=' . $detalleCapacitacion['id_capacitacion'] . '" class="btn badge btn-warning text-dark">Completar formulario de impacto pedagógico</a>';
+                } else if ($detalleCapacitacion['estado_capacitacion'] == 1 && $detalleCapacitacion['estado_respuesta'] == 1) {
+                    echo '<span  class="badge bg-success">Formulario de impacto pedagógico completado</span>';
                 }
-                    ?>
-                <?php
+                ?>
+            <?php
                 echo '</li>';
 
                 $currentInstitucion = $institucion;
             }
             ?>
         </ul>
-        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <?php $conexion = null; ?>
 </body>
 

@@ -10,7 +10,6 @@
 
 <body>
     <?php
-    include('./functions/validacion-institucion.php');
     include('./config/db-connection.php');
     try {
         $listaDocentes = [];

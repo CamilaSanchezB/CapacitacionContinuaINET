@@ -1,6 +1,5 @@
 <?php
 if (isset($_POST['eliminar'])) {
-    echo $_POST['eliminar'];
     // Iniciar sesión si aún no está iniciada
     session_start();
 

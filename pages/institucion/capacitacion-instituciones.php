@@ -12,7 +12,7 @@
 <body>
   <?php
   include('./config/db-connection.php');
-  include('./functions/validacion-institucion.php');
+  include ('./functions/fechaPasada.php');
   $listaCapacitaciones = [];
 
   $sentenciaSQL_idInstitucion = $conexion->prepare("SELECT `id_institucion` FROM instituciones WHERE `id_usuario` = :id_usuario");
@@ -52,6 +52,14 @@
             class="text-primary">
             <?php echo $capacitacion['nombre_capacitacion'] ?>
           </a>
+          <span class="ms-3 badge bg-<?php if(haPasadoFecha($capacitacion['fecha_fin_capacitacion'])){echo 'danger';}else if(haPasadoFecha($capacitacion['fecha_inicio_capacitacion'])){echo 'success';}else{echo 'warning';}?>"><?php if(haPasadoFecha($capacitacion['fecha_fin_capacitacion'])){echo 'FINALIZADO';}else if(haPasadoFecha($capacitacion['fecha_inicio_capacitacion'])){echo 'ACTIVO';}else{echo 'AUN NO INICIÓ';}?></span>
+          <?php
+          if($capacitacion['estado_respuesta'] == 0 && haPasadoFecha($capacitacion['fecha_fin_capacitacion'])){
+           ?>
+           <a href="?t=institucion&p=formulario-capacitacion&id=<?php echo $capacitacion['id_capacitacion']?>" class="btn btn-warning badge text-dark">Completar formulario de impacto pedagógico</a>
+           <?php
+          }
+          ?>
         </li>
         <?php
       }

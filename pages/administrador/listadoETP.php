@@ -10,29 +10,7 @@
 
 <body>
     <?php include('./config/db-connection.php') ?>
-    <?php
-session_start();
-
-// Función para verificar la existencia de la variable de sesión 'usuario' y obtener 'id_tipo_usuario'
-function obtenerIdTipoUsuario() {
-    // Verificar si la variable de sesión 'usuario' existe
-    if (isset($_SESSION['usuario'])) {
-        // Obtener 'id_tipo_usuario' del arreglo de sesión 'usuario'
-        return $_SESSION['usuario']['id_tipo_usuario'];
-    } else {
-        // La variable de sesión 'usuario' no existe
-        return null;
-    }
-}
-
-// Uso de la función para obtener 'id_tipo_usuario'
-$idTipoUsuario = obtenerIdTipoUsuario();
-
-if ($idTipoUsuario != 1 || $idTipoUsuario === null) {
     
-    header('Location: ?p=inicio');
-}
-?>
     <?php
     $listaInstituciones = [];
     $sentenciaSQL = $conexion->prepare("SELECT * FROM `instituciones` WHERE `estado_validacion_institucion` = '1'");
@@ -46,7 +24,7 @@ if ($idTipoUsuario != 1 || $idTipoUsuario === null) {
     
         
         <h1 style="color: rgba(129, 129, 129, 1);">Instituciones </h1>
-        <div class="col-2 d-flex justify-content-start align-items-center" style="height: 6ch;">
+        <div class="col-3 d-flex justify-content-start align-items-center" style="height: 6ch;">
             <a href='?t=administrador&p=validacionETP' class="btn shadow-sm" style="background-color: rgba(19, 140, 232, 1);  color: white;">
                 <i class="fas fa-check"></i> Ir a validar instituciones
             </a>

@@ -46,8 +46,8 @@
                         $sentenciaSQL = $conexion->prepare("SELECT d.nombre_docente, d.id_docente, d.dni_docente, d.apellido_docente FROM `detalle_docente` dd
                         INNER JOIN `docentes` d ON dd.`id_docente` = d.`id_docente`
                         INNER JOIN `especialidades` e ON dd.`id_especialidad` = e.`id_especialidad`
-                        WHERE e.id_especialidad = ? AND estado_validacion_docente = 1");
-                        $sentenciaSQL->execute([$especialidad['id_especialidad']]);
+                        WHERE e.id_especialidad = ? AND estado_validacion_docente = 1 AND dd.id_institucion = ?");
+                        $sentenciaSQL->execute([$especialidad['id_especialidad'], $institucion['id_institucion']]);
                         $listaDocentes = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
 
                         if (!empty($listaDocentes)) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-10-2023 a las 03:44:58
+-- Tiempo de generación: 19-10-2023 a las 21:14:45
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 7.3.29
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `capacitacion_continua`
 --
+CREATE DATABASE IF NOT EXISTS `capacitacion_continua` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `capacitacion_continua`;
 
 -- --------------------------------------------------------
 
@@ -52,22 +54,25 @@ CREATE TABLE `capacitaciones` (
   `id_capacitacion` int(11) NOT NULL,
   `id_institucion` int(11) NOT NULL,
   `id_tipo_educacion` int(11) NOT NULL,
+  `id_especialidad` int(11) NOT NULL,
   `nombre_capacitacion` text NOT NULL,
   `fecha_inicio_capacitacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `dias_horarios_capacitacion` text NOT NULL,
   `fecha_fin_capacitacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `modalidad_capacitacion` varchar(20) NOT NULL,
-  `lugar_o_plataforma_capacitacion` text NOT NULL
+  `lugar_o_plataforma_capacitacion` text NOT NULL,
+  `estado_respuesta` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `capacitaciones`
 --
 
-INSERT INTO `capacitaciones` (`id_capacitacion`, `id_institucion`, `id_tipo_educacion`, `nombre_capacitacion`, `fecha_inicio_capacitacion`, `dias_horarios_capacitacion`, `fecha_fin_capacitacion`, `modalidad_capacitacion`, `lugar_o_plataforma_capacitacion`) VALUES
-(21, 1, 1, 'Administración del Aula por Software (símil E-Learning Class-Netbooks) ', '2023-10-10 03:00:00', 'Martes 14:00', '2023-10-24 03:00:00', 'Virtual', 'Zoom'),
-(22, 1, 1, 'Reparación de PC', '2023-09-11 03:00:00', 'Lunes 09:00', '2023-10-09 03:00:00', 'Presencial', 'Juan b Justo 4287'),
-(23, 1, 1, 'Impresión 3D', '2023-10-24 03:00:00', 'Martes 10:00 y Jueves 13:00', '2023-11-14 03:00:00', 'Híbrido', 'Martes Zoom - Jueves Juan b Justo 4287');
+INSERT INTO `capacitaciones` (`id_capacitacion`, `id_institucion`, `id_tipo_educacion`, `id_especialidad`, `nombre_capacitacion`, `fecha_inicio_capacitacion`, `dias_horarios_capacitacion`, `fecha_fin_capacitacion`, `modalidad_capacitacion`, `lugar_o_plataforma_capacitacion`, `estado_respuesta`) VALUES
+(3, 1, 1, 1, 'Equipos de Networking (Redes LAN – WAN)', '2023-09-02 18:01:07', 'Lunes 13:00', '2023-10-09 18:01:07', 'Virtual', 'Zoom', 1),
+(4, 1, 1, 1, 'Administración del Aula por Software (símil E-Learning Class-Netbooks)', '2023-10-22 14:00:00', 'Martes y jueves 09:00', '2023-11-02 14:00:00', 'Híbrido', 'Martes: Juan b Justo 4287 - Jueves: Meet', 0),
+(5, 1, 1, 1, 'Impresión 3D', '2023-10-26 03:00:00', 'Martes y Miércoles 20:00', '2023-10-25 03:00:00', 'Virtual', 'Meet', 0),
+(9, 2, 1, 1, 'Reparación de PC', '2023-10-20 03:00:00', 'asdas', '2023-10-25 03:00:00', 'Virtual', 'asda', 0);
 
 -- --------------------------------------------------------
 
@@ -79,16 +84,18 @@ CREATE TABLE `detalle_capacitaciones` (
   `id_detalle_capacitacion` int(11) NOT NULL,
   `id_docente` int(11) NOT NULL,
   `id_capacitacion` int(11) NOT NULL,
-  `estado_capacitacion` tinyint(1) NOT NULL
+  `estado_capacitacion` tinyint(1) NOT NULL,
+  `estado_respuesta` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `detalle_capacitaciones`
 --
 
-INSERT INTO `detalle_capacitaciones` (`id_detalle_capacitacion`, `id_docente`, `id_capacitacion`, `estado_capacitacion`) VALUES
-(3, 1, 23, 0),
-(4, 1, 22, 1);
+INSERT INTO `detalle_capacitaciones` (`id_detalle_capacitacion`, `id_docente`, `id_capacitacion`, `estado_capacitacion`, `estado_respuesta`) VALUES
+(1, 1, 3, 1, 1),
+(12, 1, 5, 0, 0),
+(15, 2, 3, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -109,8 +116,9 @@ CREATE TABLE `detalle_docente` (
 --
 
 INSERT INTO `detalle_docente` (`id_detalle_docente`, `id_docente`, `id_institucion`, `id_especialidad`, `estado_validacion_docente`) VALUES
-(2, 1, 1, 2, 1),
-(4, 1, 1, 1, 0);
+(3, 1, 1, 1, 1),
+(6, 2, 1, 1, 1),
+(7, 1, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -131,7 +139,8 @@ CREATE TABLE `docentes` (
 --
 
 INSERT INTO `docentes` (`id_docente`, `nombre_docente`, `apellido_docente`, `dni_docente`, `id_usuario`) VALUES
-(1, 'Paola', 'Flament', '12345678', 3);
+(1, 'Paola', 'Flament', '12345678', 3),
+(2, 'Pablo', 'Abdala', '23456789', 5);
 
 -- --------------------------------------------------------
 
@@ -272,6 +281,53 @@ INSERT INTO `representantes_institucionales` (`id_representante`, `nombre_repres
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `respuestas_docentes`
+--
+
+CREATE TABLE `respuestas_docentes` (
+  `id_respuesta_docente` int(11) NOT NULL,
+  `id_detalle_capacitacion` int(11) NOT NULL,
+  `respuesta_contribucion` text NOT NULL,
+  `respuesta_calidad` text NOT NULL,
+  `respuesta_multiplicador` text NOT NULL,
+  `respuesta_acompanamiento` text NOT NULL,
+  `sugerencia` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `respuestas_docentes`
+--
+
+INSERT INTO `respuestas_docentes` (`id_respuesta_docente`, `id_detalle_capacitacion`, `respuesta_contribucion`, `respuesta_calidad`, `respuesta_multiplicador`, `respuesta_acompanamiento`, `sugerencia`) VALUES
+(4, 1, 'Probablemente si', 'Si', 'Indeciso', 'Probablemente no', 'Más práctica'),
+(7, 15, 'Probablemente no', 'No', 'Probablemente si', 'Indeciso', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas_institucion`
+--
+
+CREATE TABLE `respuestas_institucion` (
+  `id_respuesta_institucion` int(11) NOT NULL,
+  `id_capacitacion` int(11) NOT NULL,
+  `respuesta_realizacion` text NOT NULL,
+  `respuesta_aplicacion` text NOT NULL,
+  `respuesta_continuar` text NOT NULL,
+  `respuesta_replica` text NOT NULL,
+  `sugerencia` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `respuestas_institucion`
+--
+
+INSERT INTO `respuestas_institucion` (`id_respuesta_institucion`, `id_capacitacion`, `respuesta_realizacion`, `respuesta_aplicacion`, `respuesta_continuar`, `respuesta_replica`, `sugerencia`) VALUES
+(2, 3, 'Indeciso', 'Indeciso', 'Indeciso', 'Indeciso', '');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipos_educacion`
 --
 
@@ -330,7 +386,8 @@ INSERT INTO `usuarios` (`id_usuario`, `email_usuario`, `contrasena_usuario`, `id
 (1, 'admin@gmail.com', 'admin', 1),
 (2, 'escuelat5@gmail.com', 'escuelat5', 3),
 (3, 'docentet5@gmail.com', 'docentet5', 2),
-(4, 'escuelat3@gmail.com', 'escuelat3', 3);
+(4, 'escuelat3@gmail.com', 'escuelat3', 3),
+(5, 'pablo@gmail.com', 'pablo', 2);
 
 --
 -- Índices para tablas volcadas
@@ -349,7 +406,8 @@ ALTER TABLE `administradores`
 ALTER TABLE `capacitaciones`
   ADD PRIMARY KEY (`id_capacitacion`),
   ADD KEY `FK_capacitaciones_instituciones` (`id_institucion`),
-  ADD KEY `FK_capacitaciones_tEducacion` (`id_tipo_educacion`);
+  ADD KEY `FK_capacitaciones_tEducacion` (`id_tipo_educacion`),
+  ADD KEY `FK_Capacitaciones_Especialidad` (`id_especialidad`);
 
 --
 -- Indices de la tabla `detalle_capacitaciones`
@@ -410,6 +468,20 @@ ALTER TABLE `representantes_institucionales`
   ADD PRIMARY KEY (`id_representante`);
 
 --
+-- Indices de la tabla `respuestas_docentes`
+--
+ALTER TABLE `respuestas_docentes`
+  ADD PRIMARY KEY (`id_respuesta_docente`),
+  ADD KEY `id_detalle_capacitacion` (`id_detalle_capacitacion`);
+
+--
+-- Indices de la tabla `respuestas_institucion`
+--
+ALTER TABLE `respuestas_institucion`
+  ADD PRIMARY KEY (`id_respuesta_institucion`),
+  ADD KEY `FK_Respuestas_Capacitacion` (`id_capacitacion`);
+
+--
 -- Indices de la tabla `tipos_educacion`
 --
 ALTER TABLE `tipos_educacion`
@@ -442,25 +514,25 @@ ALTER TABLE `administradores`
 -- AUTO_INCREMENT de la tabla `capacitaciones`
 --
 ALTER TABLE `capacitaciones`
-  MODIFY `id_capacitacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_capacitacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_capacitaciones`
 --
 ALTER TABLE `detalle_capacitaciones`
-  MODIFY `id_detalle_capacitacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_detalle_capacitacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_docente`
 --
 ALTER TABLE `detalle_docente`
-  MODIFY `id_detalle_docente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_detalle_docente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `docentes`
 --
 ALTER TABLE `docentes`
-  MODIFY `id_docente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_docente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `especialidades`
@@ -493,6 +565,18 @@ ALTER TABLE `representantes_institucionales`
   MODIFY `id_representante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de la tabla `respuestas_docentes`
+--
+ALTER TABLE `respuestas_docentes`
+  MODIFY `id_respuesta_docente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `respuestas_institucion`
+--
+ALTER TABLE `respuestas_institucion`
+  MODIFY `id_respuesta_institucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `tipos_educacion`
 --
 ALTER TABLE `tipos_educacion`
@@ -508,7 +592,7 @@ ALTER TABLE `tipo_usuarios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -524,6 +608,7 @@ ALTER TABLE `administradores`
 -- Filtros para la tabla `capacitaciones`
 --
 ALTER TABLE `capacitaciones`
+  ADD CONSTRAINT `FK_Capacitaciones_Especialidad` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id_especialidad`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_capacitaciones_instituciones` FOREIGN KEY (`id_institucion`) REFERENCES `instituciones` (`id_institucion`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_capacitaciones_tEducacion` FOREIGN KEY (`id_tipo_educacion`) REFERENCES `tipos_educacion` (`id_tipo_educacion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -561,6 +646,18 @@ ALTER TABLE `instituciones`
 --
 ALTER TABLE `localidades`
   ADD CONSTRAINT `FK_localidades_provincias` FOREIGN KEY (`id_provincia`) REFERENCES `provincias` (`id_provincia`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `respuestas_docentes`
+--
+ALTER TABLE `respuestas_docentes`
+  ADD CONSTRAINT `respuestas_docentes_ibfk_1` FOREIGN KEY (`id_detalle_capacitacion`) REFERENCES `detalle_capacitaciones` (`id_detalle_capacitacion`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `respuestas_institucion`
+--
+ALTER TABLE `respuestas_institucion`
+  ADD CONSTRAINT `FK_Respuestas_Capacitacion` FOREIGN KEY (`id_capacitacion`) REFERENCES `capacitaciones` (`id_capacitacion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuarios`

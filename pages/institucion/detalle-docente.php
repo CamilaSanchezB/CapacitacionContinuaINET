@@ -5,13 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
     <?php
-    include('./functions/validacion-institucion.php');
     include('./config/db-connection.php');
     try {
         $listaDocentes = [];
@@ -50,14 +48,30 @@
 
         $sentenciaSQL->execute();
         $listaEspecialidades = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
 
+    try {
+        $listaCapacitaciones = [];
 
+        // Use a prepared statement with placeholders
+        $sentenciaSQL = $conexion->prepare("SELECT * FROM `detalle_capacitaciones`
+    INNER JOIN `docentes` ON  `detalle_capacitaciones`.`id_docente` = `docentes`.`id_docente`
+    INNER JOIN `capacitaciones` ON  `detalle_capacitaciones`.`id_capacitacion` = `capacitaciones`.`id_capacitacion`
+    WHERE `detalle_capacitaciones`.`id_docente` = :id");
+
+        // Bind the parameter
+        $sentenciaSQL->bindParam(':id', $_GET['id'], PDO::PARAM_INT);
+
+        $sentenciaSQL->execute();
+        $listaCapacitaciones = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 
     if (isset($_POST['Rechazar'])) {
-        
+
         $ids = explode("-", $_POST['Rechazar']);
         try {
             $sentenciaSQL = $conexion->prepare("DELETE FROM `detalle_docente` WHERE `id_docente` = '$ids[0]' AND `id_institucion` = '$ids[1]' AND `id_especialidad` = '$ids[2]'");
@@ -67,6 +81,8 @@
             echo $e->getMessage();
         }
     }
+
+
     ?>
     <hr class="mt-0" style="border:2ch solid rgba(125, 125, 125, 1); opacity: 1;">
     <div class="container">
@@ -119,30 +135,61 @@
             <ul>
                 <?php
                 foreach ($listaEspecialidades as $especialidad) {
-                    ?>
+                ?>
                     <li>
                         <h5>
                             <?php echo $especialidad['nombre_especialidad']; ?>
                         </h5>
                     </li>
-                    <?php
+                <?php
                 }
                 ?>
             </ul>
         </div>
+        <div class="col-5 mt-5 mb-5">
+            <hr />
+        </div>
+        <div>
+            <h3 class="text-secondary">Capacitaciones realizadas</h3>
+            <?php
+
+            if ($listaCapacitaciones) {
+            ?><ol class="col-12 text-break h5" style="font-style: normal; color: rgba(56, 56, 56, 0.63) ;">
+                    <?php foreach ($listaCapacitaciones as $capacitacion) {
+
+                    ?> <li><a href='?t=institucion&p=detalle-capacitacion&id=<?php echo $capacitacion['id_capacitacion'] ?>' class="text-primary">
+                                <?php echo $capacitacion['nombre_capacitacion'] ?>
+                            </a>
+                            <span class="ms-5 badge <?php if ($capacitacion['estado_capacitacion'] == 0) {
+                                                        echo 'bg-success';
+                                                    } else {
+                                                        echo 'bg-danger';
+                                                    } ?>"><?php if ($capacitacion['estado_capacitacion'] == 0) {
+                                                            echo 'ACTIVO';
+                                                        } else {
+                                                            echo 'FINALIZADO';
+                                                        } ?></span>
+                        </li>
+                    <?php
+
+                    }
+                    ?>
+                </ol>
+            <?php
+            } else {
+                echo "No realizó capacitaciones";
+            }
+            ?>
+        </div>
         <form method="POST" style="text-align: center">
-            <button type="submit"
-                value="<?php echo $primerElemento['id_docente'] ?>-<?php echo $primerElemento['id_institucion'] ?>-<?php echo $primerElemento['id_especialidad'] ?>"
-                name="Rechazar" class="btn shadow-sm btn-danger mt-5" style=" width: 20%">
+            <button type="submit" value="<?php echo $primerElemento['id_docente'] ?>-<?php echo $primerElemento['id_institucion'] ?>-<?php echo $primerElemento['id_especialidad'] ?>" name="Rechazar" class="btn shadow-sm btn-danger mt-5" style=" width: 20%">
                 Dar de baja
             </button>
         </form>
 
 
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 
 </html>
