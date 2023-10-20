@@ -22,13 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             switch ($row['id_tipo_usuario']) {
                 case 1:
-                    header("Location: ?t=administrador&p=listadoETP");
+                    header("Location: ?t=administrador&p=instituciones/listadoETP");
                     break;
                 case 2:
                     header("Location: ?t=docente&p=listado-capacitaciones");
                     break;
                 case 3:
-                    header("Location: ?t=institucion&p=capacitacion-instituciones");
+                    header("Location: ?t=institucion&p=capacitaciones/capacitacion-instituciones");
                     break;
             }
             // header("Location: ?p=inicio");
@@ -51,6 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -72,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input name="email" class="form-control" placeholder="Correo electronico" type="text" required>
                     </div>
                     <div class="form-group input-group">
-                    <div class="input-group-prepend">
+                        <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">🔒 </span>
                         </div>
                         <input name="contrasena" class="form-control" placeholder="Contraseña" type="password" required>
@@ -83,11 +85,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </form>
                 <!-- Enlace a la página de registro -->
 
-                <p class="text-center">¿No tienes una cuenta? <a href="?p=elegirDocenteInstitucion">Regístrate aquí</a></p>
+                <p class="text-center">¿No tienes una cuenta? <a href="?t=cuenta&p=elegirDocenteInstitucion">Regístrate aquí</a></p>
             </article>
         </div>
     </div>
-
+    <?php
+    if (isset($_GET['f'])) {
+    ?>
+        <script>
+            Swal.fire({
+                title: 'Registro completado con éxito',
+                text: "Para poder acceder a la plataforma el administrador o la respectiva institucion ETP deben autorizarte",
+                icon: 'success',
+                allowOutsideClick: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.replace("?p=inicio");
+                }
+            })
+            
+        </script>
+    <?php }
+    ?>
 </body>
 
 </html>

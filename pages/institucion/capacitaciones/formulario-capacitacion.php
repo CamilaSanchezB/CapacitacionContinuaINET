@@ -15,7 +15,7 @@
         include('./functions/obtenerDetalleCapacitacion.php');
         $primerElemento = obtenerDetalleCapacitacion($_GET['id']);
         if($primerElemento['estado_respuesta'] || !haPasadoFecha($primerElemento['fecha_fin_capacitacion'])){
-            header('Location: ?t=institucion&p=capacitacion-instituciones');
+            header('Location: ?t=institucion&p=capacitaciones/capacitacion-instituciones');
         }
     }
     ?>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Capacitación continua INET</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
@@ -54,7 +54,7 @@
                             echo '<ul>';
                             foreach ($listaDocentes as $docente) {
         ?>
-                                <li><a href="?t=administrador&p=detalleDocente&id=<?php echo $docente['id_docente']; ?>"><?php echo $docente['apellido_docente']; ?> <?php echo $docente['nombre_docente']; ?> - DNI: <?php echo $docente['dni_docente']; ?></a></li>
+                                <li><a href="?t=administrador&p=docentes/detalleDocente&id=<?php echo $docente['id_docente']; ?>"><?php echo $docente['apellido_docente']; ?> <?php echo $docente['nombre_docente']; ?> - DNI: <?php echo $docente['dni_docente']; ?></a></li>
         <?php
                             }
                             echo '</ul>';

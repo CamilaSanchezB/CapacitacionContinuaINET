@@ -14,17 +14,17 @@
         <img src="./assets/image/logo-inet.png" class="img-fluid">
     </div>
     <div class="col-3 d-flex justify-content-end align-items-center" style="height: 6ch;">
-        <a href='?t=institucion&p=capacitacion-instituciones' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
+        <a href='?t=institucion&p=capacitaciones/capacitacion-instituciones' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
             <i class="fas fa-check"></i> Capacitaciones
         </a>
     </div>
     <div class="col-3 d-flex justify-content-end align-items-center" style="height: 6ch;">
-        <a href='?t=institucion&p=capacitacion-crear' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
+        <a href='?t=institucion&p=capacitaciones/capacitacion-crear' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
             <i class="fas fa-check"></i> Crear Capacitaciones
         </a>
     </div>
     <div class="col-3 d-flex justify-content-end align-items-center" style="height: 6ch;">
-        <a href='?t=institucion&p=docentes-validar' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color:  rgba(19, 140, 232, 1);  color: white; ">
+        <a href='?t=institucion&p=docentes/docentes-validar' class="btn shadow-sm" style="height: 80%;width: 80% ;background-color:  rgba(19, 140, 232, 1);  color: white; ">
             <i class="fas fa-check"></i> Docentes
         </a>
     </div>

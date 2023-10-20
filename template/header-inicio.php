@@ -4,7 +4,7 @@
       </div>
       <div class="col-7"></div>
       <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-        <a href='?p=iniciarsesion' class="btn btn-block"
+        <a href='?t=cuenta&p=iniciarsesion' class="btn btn-block"
           style="background-color: rgba(19, 140, 232, 1);  color: white;width: 100%;">
           <i class="fas fa-check"></i> Ingresar
         </a>

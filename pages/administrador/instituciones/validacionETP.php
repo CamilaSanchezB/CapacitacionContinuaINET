@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap demo</title>
+  <title>Capacitación continua INET</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
@@ -25,7 +25,7 @@
       if($listaInstituciones){
         foreach ($listaInstituciones as $institucion) { ?>
           <li style="margin-bottom: 10px; font-size: 20px;" class="text-primary">
-            <a href='?t=administrador&p=detalleValidacionETP&id=<?php echo $institucion['id_institucion'] ?>' class="text-primary">
+            <a href='?t=administrador&p=instituciones/detalleValidacionETP&id=<?php echo $institucion['id_institucion'] ?>' class="text-primary">
               <?php echo $institucion['nombre_institucion'] ?>
             </a>
           </li>

@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 guardarOpcionEnSesion(3);
                 break;
         }
-        header("Location: ?p=crearUsuario");
+        header("Location: ?t=cuenta&p=crearUsuario");
     }
 }
 

@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sentenciaSQL->bindParam(":id_capacitacion", $id_capacitacion);
         $sentenciaSQL->execute();
 
-        header("Location: ?t=institucion&p=capacitacion-instituciones");
+        header("Location: ?t=institucion&p=capacitaciones/capacitacion-instituciones");
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

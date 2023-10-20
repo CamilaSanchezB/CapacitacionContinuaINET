@@ -16,19 +16,19 @@
         </div>
         <div class="col-3"></div>
         <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-            <a href='?t=administrador&p=listadoETP' class="btn shadow-sm"
+            <a href='?t=administrador&p=instituciones/listadoETP' class="btn shadow-sm"
                 style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
                 <i class="fas fa-check"></i> Instituciones
             </a>
         </div>
         <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-            <a href='?t=administrador&p=listadoDocente' class="btn shadow-sm"
+            <a href='?t=administrador&p=docentes/listadoDocente' class="btn shadow-sm"
                 style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
                 <i class="fas fa-check"></i> Docentes
             </a>
         </div>
         <div class="col-2 d-flex justify-content-end align-items-center" style="height: 6ch;">
-            <a href='?t=administrador&p=listadoCapacitaciones' class="btn shadow-sm"
+            <a href='?t=administrador&p=capacitaciones/listadoCapacitaciones' class="btn shadow-sm"
                 style="height: 80%;width: 80% ;background-color: rgba(19, 140, 232, 1);  color: white;">
                 <i class="fas fa-check"></i> Capacitaciones
             </a>

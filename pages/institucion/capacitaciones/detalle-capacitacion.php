@@ -8,9 +8,9 @@ include('./functions/fechaPasada.php');
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Capacitación continua INET</title>
     <?php 
-    include('./functions/chart/inicializar-chart.php')
+    include('./functions/chart/docente/inicializar-chart.php')
     ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -55,7 +55,7 @@ include('./functions/fechaPasada.php');
         try {
             $sentenciaSQL = $conexion->prepare("DELETE FROM  `capacitaciones` WHERE `id_capacitacion` = '$id_capacitacion'");
             $sentenciaSQL->execute();
-            header("Location: ?t=institucion&p=capacitacion-instituciones");
+            header("Location: ?t=institucion&p=capacitaciones/capacitacion-instituciones");
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -86,13 +86,13 @@ include('./functions/fechaPasada.php');
                 foreach ($docentesInscriptos as $docenteInsripto) {
                 ?>
                     <li class="mb-2">
-                        <a href="?t=institucion&p=detalle-docente&id=<?php echo $docenteInsripto['id_docente'] ?>">
+                        <a href="?t=institucion&p=docentes/detalle-docente&id=<?php echo $docenteInsripto['id_docente'] ?>">
                             <?php echo $docenteInsripto['apellido_docente'] . ' ' . $docenteInsripto['nombre_docente'] . ' DNI:' . $docenteInsripto['dni_docente']; ?>
                         </a>
                         <span class="ms-3 badge bg-<?php echo ($docenteInsripto['estado_respuesta'] == 1) ? 'success' : 'danger' ?>"><?php echo ($docenteInsripto['estado_respuesta'] == 1) ? 'Completó el formulario' : 'No completó el formulario de impacto pedagógico aún' ?></span>
                         <?php if (!$docenteInsripto['estado_respuesta'] && $docenteInsripto['estado_capacitacion']) {
                         ?>
-                            <a class="ms-3 badge btn bg-warning text-dark" href="#">Enviar e-mail de aviso</a>
+                            <a class="ms-3 badge btn bg-warning text-dark" href="#" onclick="alert('En desarrollo...')"></a>Enviar e-mail de aviso</a>
                         <?php
                         } ?>
                     </li>
@@ -127,7 +127,6 @@ include('./functions/fechaPasada.php');
             <div class="col-12 d-flex justify-content-center">
                 <form method="POST">
                     <button class="btn btn-lg btn-danger shadow mb-5" name="Eliminar" value="<?php echo $primerElemento['id_capacitacion'] ?>">Eliminar capacitación</button>
-                    <a href="" onclick="alert('En desarrollo...')" class="btn btn-lg btn-warning shadow mb-5" value="<?php echo $primerElemento['id_capacitacion'] ?>">Editar capacitación</a>
                 </form>
             </div>
         </div>

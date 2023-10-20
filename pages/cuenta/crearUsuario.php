@@ -1,10 +1,22 @@
 <?php
 session_start();
+include('./config/db-connection.php');
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $contrasena = $_POST["contrasena"];
     if (empty($email) || empty($contrasena)) {
         echo '<script>alert("Por favor, complete todos los campos.");</script>';
+    } else {
+        $usuario = array(
+            "email_usuario" => $email,
+            "contrasena_usuario" => $contrasena,
+            "id_tipo_usuario" => $_SESSION["tipo_usuario"] 
+        );
+        $_SESSION["usuario_registro"] = $usuario;
+        $ubicacion = ($_SESSION["tipo_usuario"] == 2) ? 'docente/datosDocente' : 'institucion/datosRepInst';
+        header("Location: ?t=cuenta&p=$ubicacion");
+        exit; // Asegura que el script se detiene después de redirigir.
     }
 }
 ?>

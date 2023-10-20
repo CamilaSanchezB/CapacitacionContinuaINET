@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Capacitación continua INET</title>
+    <?php require_once('./functions/chart/institucion/inicializar-chart.php') ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
@@ -15,16 +16,11 @@
     $sentenciaSQL = $conexion->prepare("SELECT * FROM `respuestas_institucion`");
     $sentenciaSQL->execute();
     $listaCapacitaciones = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
-    var_dump($listaCapacitaciones);
     include('./functions/cerrarsesion.php');
     ?>
     <?php require_once('./template/header-administrador.php') ?>
     <div class="container" style="min-height: 50vh;">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1 style="color: rgba(129, 129, 129, 1);">Estadísticas generales de las capacitaciones</h1>
-        </div>
-
-
+        <?php require_once('./template/chart-render-graficos.php') ?>
         
     </div>
     </div>

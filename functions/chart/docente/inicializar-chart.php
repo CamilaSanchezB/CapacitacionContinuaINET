@@ -1,6 +1,6 @@
 <?php
-include('dibujo-chart-capacitacion-docente.php');
-include('chart-capacitacion-docente.php');
+include('functions\chart\dibujo-chart-capacitacion-docente.php');
+include('chart-docente.php');
 $data = obtenerValoracionesDocente(0);
 dibujarGrafico($data, '¿Cree que lo visto en la capacitación puede contribuir a sus prácticas docentes?', 'donutchart');
 $data = obtenerValoracionesDocente(1);
