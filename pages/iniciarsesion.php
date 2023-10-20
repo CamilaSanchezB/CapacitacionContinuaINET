@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($row) {
             $_SESSION["usuario"] = $row;
 
-            
+
             switch ($row['id_tipo_usuario']) {
                 case 1:
                     header("Location: ?t=administrador&p=listadoETP");
@@ -64,23 +64,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p class="division">
                 <p class="bg-light"></p>
                 </p><br>
-                <form method="POST" >
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">@ </span>
-                            </div>
-                            <input name="email" class="form-control" placeholder="Correo electronico" type="text" required>
+                <form method="POST">
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@ &shy</span>
                         </div>
-                        <div class="form-group input-group">
-                            <input name="contrasena" class="form-control" placeholder="Contraseña" type="password" required>
+                        <input name="email" class="form-control" placeholder="Correo electronico" type="text" required>
+                    </div>
+                    <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">🔒 </span>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
-                        </div>
-                    </form>
+                        <input name="contrasena" class="form-control" placeholder="Contraseña" type="password" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                    </div>
+                </form>
                 <!-- Enlace a la página de registro -->
 
-                <p class="text-center">¿No tienes una cuenta? <a href="#" onclick="alert('Esta sección está en desarrollo');">Regístrate aquí</a></p>
+                <p class="text-center">¿No tienes una cuenta? <a href="?p=elegirDocenteInstitucion">Regístrate aquí</a></p>
             </article>
         </div>
     </div>
