@@ -1,3 +1,0 @@
-Para mandar las respuestas del formulario se hacen desde el formulario.js
-Codigo Extremadamente desorganizado, Falta interfez, y en los dos falta un buen boton ademas de mas 
-componentes
