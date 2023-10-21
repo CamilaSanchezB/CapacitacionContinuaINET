@@ -12,16 +12,33 @@
 <body>
     <?php include('./config/db-connection.php') ?>
     <?php
-    $listaCapacitaciones = [];
-    $sentenciaSQL = $conexion->prepare("SELECT * FROM `respuestas_institucion`");
-    $sentenciaSQL->execute();
-    $listaCapacitaciones = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+     try {
+        $sentenciaSQL = "SELECT `sugerencia` FROM `respuestas_institucion` WHERE `sugerencia` IS NOT NULL AND `sugerencia` <> '';";
+        $sentenciaSQL = $conexion->prepare($sentenciaSQL);
+        $sentenciaSQL->execute();
+
+        $sugerencias = $sentenciaSQL->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
     include('./functions/cerrarsesion.php');
     ?>
     <?php require_once('./template/header-administrador.php') ?>
     <div class="container" style="min-height: 50vh;">
         <?php require_once('./template/chart-render-graficos.php') ?>
-        
+         <h1 class="text-secondary">Sugerencias</h1>
+         <?php
+            if (!empty($sugerencias)) { ?>
+                <ul>
+                    <?php
+                    foreach ($sugerencias as $sugerencia) {
+                        echo '<li>' . $sugerencia . '</li>';
+                    } ?>
+                </ul>
+        <?php
+            } else {
+                echo 'No hay sugerencias';
+            } ?>
     </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
